@@ -41,7 +41,11 @@ func GetProducts(c *gin.Context) {
 	// fmt.Println("### Woo Secret:", secret)
 	// fmt.Println("### Woo URL:", baseURL)
 
-	url := fmt.Sprintf("%s/wp-json/wc/v3/products", baseURL)
+	// pagination parameters
+	page := c.DefaultQuery("page", "1")
+	limit := c.DefaultQuery("limit", "20")
+
+	url := fmt.Sprintf("%s/wp-json/wc/v3/products?page=%s&per_page=%s", baseURL, page, limit)
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
